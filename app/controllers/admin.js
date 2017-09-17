@@ -4,8 +4,10 @@ var user_md = require('../models/user');
 var helper = require('../helpers/helper');
 
 router.get('/', (req, res)=> {
-    res.json({
-        message: 'this is admin page'
+    res.render('admin/dashboard',{
+        data:{
+            error: false
+        }
     })
 })
 
