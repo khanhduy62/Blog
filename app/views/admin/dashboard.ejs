@@ -34,33 +34,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <% if(data.posts){ %>
+                            <% for(let i=0;i<data.posts.length;i++){ %>
+                                    <tr>
+                                            <td> <%=data.posts[i].id %></td>
+                                            <td> <%=data.posts[i].title %></td>
+                                            <td> <%=data.posts[i].content %></td>                                            
+                                            <td> <%=data.posts[i].author %></td>
+                                            <td> <%=data.posts[i].created_at %></td>
+                                            <td> <%=data.posts[i].updated_at %></td>
+                                            <td>
+                                                <a href="" class="btn btn-primary" > Edit </a>
+                                                <a href="" class="btn btn-danger" > Delete </a>
+                                            </td>
+                                    </tr>
+                            <%}%>
+                        <%}%>
+                       
                     </tbody>
                 </table>
             </div>
