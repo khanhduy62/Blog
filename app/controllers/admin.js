@@ -122,5 +122,9 @@ router.post('/signin', (req, res)=> {
         });
     }
     
+});
+
+router.get('/post/new', (req,res)=>{
+    res.render('admin/post/new',{data:{error:false}});
 })
 module.exports = router;
