@@ -147,4 +147,22 @@ router.post('/post/new', (req,res)=>{
         })
     })
 })
+
+router.get('/post/edit/:id', (req, res)=>{
+    let params = req.params;
+    let id = params.id;
+
+    let data = post_md.getPostById(id);
+
+    data.then((posts)=>{
+        let post = posts[0];
+        var data = {
+            post: post,
+            error: false
+        }
+        res.render('admin/post/edit', {data: data});
+    }).catch((error)=>{
+        res.render('admin/post/edit',{data: {error: 'could not get post by ID '}});
+    })
+})
 module.exports = router;

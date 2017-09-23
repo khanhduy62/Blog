@@ -34,7 +34,27 @@ addPost = (params)=>{
     }
     return false;
 }
+
+getPostById = (id)=>{
+    if(id){
+        var deferred = q.defer();
+        
+    
+        var query = conn.query('Select * from posts where `id` = ? ',[id] , (error, results, fields)=> {
+            if (error){
+                console.log('loi khi select ',error)
+                deferred.reject(new Error(error));
+            }else{
+                deferred.resolve(results);
+            }
+        });
+        return deferred.promise;
+    }
+    return false;
+    
+}
 module.exports = {
     getAllPosts: getAllPosts,
-    addPost: addPost
+    addPost: addPost,
+    getPostById: getPostById,
 }
