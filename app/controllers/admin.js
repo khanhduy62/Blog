@@ -165,4 +165,21 @@ router.get('/post/edit/:id', (req, res)=>{
         res.render('admin/post/edit',{data: {error: 'could not get post by ID '}});
     })
 })
+
+router.put('/post/edit', (req, res)=>{
+    let params = req.body
+
+    let data = post_md.updatePost(params)
+
+    
+        data.then(result=>{
+            res.json({
+                status_code: 200
+            })
+        }).catch(error=>{
+            res.json({
+                status_code: 500
+            })
+        })
+})
 module.exports = router;

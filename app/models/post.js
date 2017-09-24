@@ -53,8 +53,28 @@ getPostById = (id)=>{
     return false;
     
 }
+
+updatePost = (params)=>{
+    if(params){
+        var deferred = q.defer();
+
+          var query = conn.query('UPDATE posts  SET title = ?, content = ?, author = ?, updated_at = ?  WHERE id = ?', [params.title, params.content, params.author, new Date(), params.id],  (error, results, fields)=> {
+            if (error){
+                console.log('loi khi insert ',error)
+                deferred.reject(new Error(error));
+            }else{
+                console.log('update ok')
+                deferred.resolve(results);
+            }
+          });
+        return deferred.promise;
+    }
+    console.log('khong thuc hien dc update post')
+    return false;
+}
 module.exports = {
     getAllPosts: getAllPosts,
     addPost: addPost,
     getPostById: getPostById,
+    updatePost: updatePost,
 }
