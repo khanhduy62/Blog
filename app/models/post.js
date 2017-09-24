@@ -72,9 +72,29 @@ updatePost = (params)=>{
     console.log('khong thuc hien dc update post')
     return false;
 }
+
+deletePost = (post_id)=>{
+    if(post_id){
+        var deferred = q.defer();
+
+          var query = conn.query('DELETE FROM posts WHERE id = ?', [post_id],  (error, results, fields)=> {
+            if (error){
+                console.log('loi khi delete ',error)
+                deferred.reject(new Error(error));
+            }else{
+                console.log('delete ok')
+                deferred.resolve(results);
+            }
+          });
+        return deferred.promise;
+    }
+    console.log('khong thuc hien dc update post')
+    return false;
+}
 module.exports = {
     getAllPosts: getAllPosts,
     addPost: addPost,
     getPostById: getPostById,
     updatePost: updatePost,
+    deletePost: deletePost,
 }

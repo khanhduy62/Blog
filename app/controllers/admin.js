@@ -182,4 +182,21 @@ router.put('/post/edit', (req, res)=>{
             })
         })
 })
+
+router.delete('/post/delete', (req, res)=>{
+    let post_id = req.body.id
+
+    let data = post_md.deletePost(post_id)
+
+    
+        data.then(result=>{
+            res.json({
+                status_code: 200
+            })
+        }).catch(error=>{
+            res.json({
+                status_code: 500
+            })
+        })
+})
 module.exports = router;
