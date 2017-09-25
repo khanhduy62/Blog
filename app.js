@@ -16,7 +16,7 @@ app.use(session({
   secret: 'keyboardcat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: false }
 }))
 
 var controllers = require(__dirname+'/app/controllers');

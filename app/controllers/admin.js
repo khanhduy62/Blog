@@ -5,18 +5,25 @@ var post_md = require('../models/post');
 var helper = require('../helpers/helper');
 
 router.get('/', (req, res)=> {
-
-    var data = post_md.getAllPosts();
-    data.then((posts)=>{
-        var data = {
-            posts: posts,
-            error: false
-        }
-        res.render('admin/dashboard',{data: data})
-
-    }).catch((error)=>{
-        res.render('admin/dashboard',{data: {error: 'Get Posts Data is Error !!!'}})
-    })
+    console.log('session ',req.session.session_user )
+    if(req.session.session_user){
+        console.log('da co session')
+        var data = post_md.getAllPosts();
+        data.then((posts)=>{
+            var data = {
+                posts: posts,
+                error: false
+            }
+            res.render('admin/dashboard',{data: data})
+    
+        }).catch((error)=>{
+            res.render('admin/dashboard',{data: {error: 'Get Posts Data is Error !!!'}})
+        })
+    }else{
+        console.log('chua co session')
+        res.redirect('/admin/signin')
+    }
+    
     
 })
 
@@ -105,7 +112,7 @@ router.post('/signin', (req, res)=> {
                 if(status){
                     req.session.session_user = user;
                     console.log('Session la: ',req.session.session_user)
-                    res.redirect('/');
+                    res.redirect('/admin');
                 }else{
                     res.render('signin',{
                         data: {
@@ -125,7 +132,11 @@ router.post('/signin', (req, res)=> {
 });
 
 router.get('/post/new', (req,res)=>{
-    res.render('admin/post/new',{data:{error:false}});
+    if(req.session.session_user){
+        res.render('admin/post/new',{data:{error:false}});      
+    }else{
+        res.redirect('/admin/singin') 
+    }
 })
 
 router.post('/post/new', (req,res)=>{
@@ -149,21 +160,26 @@ router.post('/post/new', (req,res)=>{
 })
 
 router.get('/post/edit/:id', (req, res)=>{
-    let params = req.params;
-    let id = params.id;
-
-    let data = post_md.getPostById(id);
-
-    data.then((posts)=>{
-        let post = posts[0];
-        var data = {
-            post: post,
-            error: false
-        }
-        res.render('admin/post/edit', {data: data});
-    }).catch((error)=>{
-        res.render('admin/post/edit',{data: {error: 'could not get post by ID '}});
-    })
+    if(req.session.session_user){
+        let params = req.params;
+        let id = params.id;
+    
+        let data = post_md.getPostById(id);
+    
+        data.then((posts)=>{
+            let post = posts[0];
+            var data = {
+                post: post,
+                error: false
+            }
+            res.render('admin/post/edit', {data: data});
+        }).catch((error)=>{
+            res.render('admin/post/edit',{data: {error: 'could not get post by ID '}});
+        })
+    }else{
+        res.redirect('/admin/singin') 
+    }
+    
 })
 
 router.put('/post/edit', (req, res)=>{
@@ -201,19 +217,24 @@ router.delete('/post/delete', (req, res)=>{
 })
 
 router.get('/user', (req, res)=>{
-    let data = user_md.getAllUsers();
-
-    data.then(users=>{
-        let data = {
-            users: users,
-            error: false
-        }
-        res.render('admin/user', {data: data})
-    }).catch(err=>{
-        let data = {
-            error: 'could not get all usets'
-        }
-        res.render('admin/user', {data: data})
-    })
+    if(req.session.session_user){
+        let data = user_md.getAllUsers();
+        
+            data.then(users=>{
+                let data = {
+                    users: users,
+                    error: false
+                }
+                res.render('admin/user', {data: data})
+            }).catch(err=>{
+                let data = {
+                    error: 'could not get all usets'
+                }
+                res.render('admin/user', {data: data})
+            })
+    }else{
+        res.redirect('/admin/singin') 
+    }
+    
 })
 module.exports = router;
