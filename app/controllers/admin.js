@@ -199,4 +199,21 @@ router.delete('/post/delete', (req, res)=>{
             })
         })
 })
+
+router.get('/user', (req, res)=>{
+    let data = user_md.getAllUsers();
+
+    data.then(users=>{
+        let data = {
+            users: users,
+            error: false
+        }
+        res.render('admin/user', {data: data})
+    }).catch(err=>{
+        let data = {
+            error: 'could not get all usets'
+        }
+        res.render('admin/user', {data: data})
+    })
+})
 module.exports = router;

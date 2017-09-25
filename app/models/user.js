@@ -36,7 +36,23 @@ getUserByEmail = (email)=>{
     }
     return false;
 }
+
+getAllUsers = ()=>{
+    var deferred = q.defer();
+    
+            var query = conn.query('SELECT * FROM users ',  (error, results, fields)=> {
+                if(error){
+                    console.log("Co loi get all users");
+                    deferred.reject(new Error(error));
+                }else{
+                    console.log('thanh cong getAllUsers')
+                    deferred.resolve(results);
+                }
+            });
+    return deferred.promise;
+}
 module.exports = {
     addUser : addUser,
-    getUserByEmail : getUserByEmail
+    getUserByEmail : getUserByEmail,
+    getAllUsers: getAllUsers,
 }
