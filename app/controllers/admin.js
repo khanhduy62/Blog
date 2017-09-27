@@ -135,7 +135,7 @@ router.get('/post/new', (req,res)=>{
     if(req.session.session_user){
         res.render('admin/post/new',{data:{error:false}});      
     }else{
-        res.redirect('/admin/singin') 
+        res.redirect('/admin/signin') 
     }
 })
 
@@ -233,7 +233,7 @@ router.get('/user', (req, res)=>{
                 res.render('admin/user', {data: data})
             })
     }else{
-        res.redirect('/admin/singin') 
+        res.redirect('/admin/signin') 
     }
     
 })
