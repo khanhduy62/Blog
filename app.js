@@ -3,7 +3,7 @@ var app = express();
 var session = require('express-session');
 var config = require('./config/config');
 var body_parser = require('body-parser');
-
+var socketIO = require('socket.io')
 // body_parser
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({     // to support URL-encoded bodies
@@ -32,6 +32,8 @@ app.use(controllers);
 app.use(function (req, res, next) {
     res.status(404).get('/')
   })
-app.listen(config.server.port, config.server.host, ()=> {
+var server = app.listen(config.server.port, config.server.host, ()=> {
     console.log('Server is running on port '+ config.server.port)
 })
+
+var io = socketIO(server)
