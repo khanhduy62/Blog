@@ -36,6 +36,4 @@ var server = app.listen(config.server.port, config.server.host, ()=> {
     console.log('Server is running on port '+ config.server.port)
 })
 
-var io = socketIO(server);
-
-var socketcontrol = require("./app/common/socketcontrol")(io);
+var io = socketIO(server)
